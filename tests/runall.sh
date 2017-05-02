@@ -57,6 +57,11 @@ export PASSWORD_STORE_DIR="./password-store"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 export PASSWORD_STORE_EXTENSIONS_DIR="../"
 export PASSWORD_STORE_KEY="F539FA5D1679367F5130C2E1F9861873C7290993"
+mkdir "$GNUPGHOME" 2> /dev/null
+chmod 700 "$GNUPGHOME"
+gpg2 --import < "${PASSWORD_STORE_KEY}.pub.asc"
+gpg2 --allow-secret-key-import --import < "${PASSWORD_STORE_KEY}.sec.asc"
+gpg2 --import-ownertrust < "${PASSWORD_STORE_KEY}.ownertrust"
 if ! { "$PASS" init "$PASSWORD_STORE_KEY" ; } ; then
     printf "$TERM_FAIL: cannot initialize password storage directory.\n"
     exit 1
@@ -78,6 +83,7 @@ echo "Total failed: $CUL_ST"
 
 # Clean up.
 rm -rf "$PASSWORD_STORE_DIR"
+rm -rf "$GNUPGHOME"
 # In case this file gets sourced ...
 unset PASS
 unset GNUPGHOME

@@ -1,4 +1,3 @@
 *~
-tests/gnupg/S.gpg-agent*
-tests/gnupg/random_seed
+tests/gnupg
 tests/password-store
