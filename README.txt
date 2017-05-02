@@ -7,7 +7,7 @@ NAME
 
 
 SYNOPSIS
-       pass genphrase [ options ] pass-name [ word-length ]
+       pass genphrase [ options ] pass-name [ word-count ]
 
 
 DESCRIPTION
