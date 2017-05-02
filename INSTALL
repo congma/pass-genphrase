@@ -1,0 +1,73 @@
+Local install (recommended)
+---------------------------
+
+Local install means copying the extension's files to the user's own Password
+Store storage dictionary.  This is the recommended installation method.
+
+To perform local installation, type the command:
+
+	make install
+
+The following procedure determines the path of installation:
+
+    1.  If the variable `PASSWORD_STORE_EXTENSIONS_DIR' is set, it is used as
+        the destination of file copying.
+    2.  Otherwise, check the variable `PASSWORD_STORE_DIR'.  If it is set,
+        `PASSWORD_STORE_DIR/.extensions' is used as the destination.
+    3.  Otherwise, the directory `~/.password-store/.extensions' is used.
+
+(See the manual of pass(1) for the rationale.)
+
+NOTE:  Under the local install mode, the manual page will not be installed.
+
+NOTE:  To use locally installed extensions, the environment variable
+`PASSWORD_STORE_ENABLE_EXTENSIONS' must be set to the exact string `true'.
+
+
+Global install
+--------------
+
+Globally installed extensions can be used by any user without setting the
+`PASSWORD_STORE_ENABLE_EXTENSIONS' environment variable.
+
+For global install, it's necessary to set the `PREFIX' variable for `make', and
+the value should point to the prefix directory of the `pass' installation.  The
+Makefile will not try to be so smart as to guess the copy destination.
+
+For example, if `pass' is installed as `/usr/local/bin/pass', the correct
+PREFIX should likely be `/usr/local'.
+
+By default, if `PREFIX' is not set, `/usr' is used.
+
+To install this extension globally, use the command
+
+	make globalinstall
+
+with suitable privileges.  The `PREFIX' variable can be specified as an
+environment variable, for example, by
+
+	PREFIX=/usr make globalinstall
+
+or as a command line argument to `make', for example, by
+
+	make PREFIX=/usr globalinstall
+
+Another example, on Mac OS X (macOS) with `pass' installed from Homebrew:
+
+	make PREFIX="$(brew --prefix)" globalinstall
+
+
+Uninstallation
+--------------
+
+There are two uninstallation commands,
+
+	make uninstall
+
+and
+	make globaluninstall,
+
+each for the respective installation mode.  To uninstall globallly, one should
+also set the `PREFIX' variable.
+
+Uninstalling this extension does not affect the stored passphrases.

@@ -1,0 +1,27 @@
+With due gratitude, the following authors' contributions are acknowledged.
+
+* Jason A. Donenfeld
+ - Creator of "pass", or Password Store, the password manager.  This program
+   (pass-genphrase) only makes sense when used as part of "pass".
+ - The code of this program closely follows that of "pass".  Portions are used
+   directly from the "pass" source code in a bid to maximize compatibility.
+
+* Joseph Bonneau / The Electronic Frontier Foundation
+ - Creator of the default dictionary used by this program, the EFF Long Word
+   List.
+
+* Arnold G. Reinhold
+ - Creator of Diceware (tm) and the Diceware English Wordlist.  The English
+   Wordlist is used as part of the test suite and an alternative passphrase
+   dictionary.
+ - Diceware inspired similar passphrase generation tools, including this
+   program.
+
+* Vladimír Sedmík
+ - Creator of the original Diceware Czech Wordlist.  A modified version of the
+   Czech Wordlist (with the BOM removed) is used as part of the test suite and
+   an alternative passphrase dictionary.
+
+* Alexandre Pujol and Contributors to "pass-update", and
+* Tad Fisher and Contributors to "pass-otp"
+ - Their work on pass extensions has been studied while writing this program.

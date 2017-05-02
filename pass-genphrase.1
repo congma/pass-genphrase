@@ -1,0 +1,117 @@
+.mso www.tmac
+.TH PASS-GENPHRASE 1 "2017 May 1" PASS "PASS EXTENSION COMMANDS"
+
+.SH NAME
+
+pass-genphrase - passphrase generator extension for
+.BR pass (1)
+
+.SH SYNOPSIS
+
+.B pass genphrase
+[
+.I options
+] pass-name [
+.I word-length
+]
+
+.SH DESCRIPTION
+
+.B pass-genphrase
+is an extension for
+.BR pass (1)
+that provides the 
+.B pass genphrase
+command for securely creating memorable passphrases using a
+Diceware[\*(Tm]-compatible dictionary file.  It is a drop-in replacement for
+the
+.B pass generate
+command.
+
+By default, the dictionary file is the `EFF Long Word List'
+.URL https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt
+created by Joseph Bonneau / The Electronic Frontier Foundation, based on
+linguistic studies of the English language.  The user can also specify an
+alternative dictionary using the \fI\-d\fP/\fI\-\-dict\fP option.
+
+.SH OPTIONS AND ARGUMENTS
+
+The options closely follow those of
+.B pass generate\fP\.  They are listed as follows.
+
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Display help and exit.
+
+.TP
+\fB\-c\fR, \fB\-\-clip\fR
+Write the generated passphrase to clipboard, to be erased later automatically
+by
+.BR pass (1)\fR\.
+
+.TP
+\fB\-f\fR, \fB\-\-force\fR
+Replace existing password entry without prompt.
+
+.TP
+\fB\-i\fR, \fB\-\-in\-place\fR
+Generate non-interactively.  Only replace the first line of the stored password
+file with the newly generated passphrase.  This is useful for non-interatively
+editing a multi-line password file.
+
+.TP
+\fB\-q\fR, \fB\-\-qrcode\fR
+Encode the generated passphrase as QR code using
+.BR qrencode (1)
+without echoing the text to terminal.  See
+.BR pass (1)
+for more information about using QR code.
+
+.PP
+In addition, the following option is specific to
+.B pass genphrase\fR:
+
+.TP
+\fB\-d\fR \fIpath\fR, \fB\-\-dict\fR=\fIpath\fR
+Specify the path to a dictionary file.
+
+.PP
+The default word count in the passphrase is 6.  To change this, specify a
+number as the \fIword-count\fR positional argument after the \fIpass-name\fR.
+You can specify the word count as low as 1, although this is clearly not
+recommended.
+
+.SH NOTES
+
+In many cases one could simply generate a passphrase using any tool and pipe it
+to
+.B pass insert\fR.  However, this might be problematic when editing an existing
+password, because
+.B pass insert\fR uses the standard input for interactive prompts and
+confirmations.
+
+The command uses a helper script written in Python for securely shuffling the
+dictionary file.  Please make sure Python (either version 2.7 or 3.6) is
+installed.
+
+.SH BUGS
+
+Please report bugs to the Issues page on Github
+.URL https://github.com/congma/pass-genphrase/issues
+
+.SH SEE ALSO
+
+.BR pass (1)
+
+.SH COPYRIGHT
+
+Copyright (C) 2017 Cong Ma and contributors. License GPLv3+: GNU GPL version 3
+or later
+.URL https://gnu.org/licenses/gpl.html
+
+This is free software: you are free to change and redistribute it.  There is NO
+WARRANTY, to the extent permitted by law.
+
+See the file \fICONTRIBUTORS\fR for the source of contributions.
+
+Diceware[\*(Tm] is a trademark of Arnold G. Reinhold.

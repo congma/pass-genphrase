@@ -1,0 +1,4 @@
+*~
+tests/gnupg/S.gpg-agent*
+tests/gnupg/random_seed
+tests/password-store
