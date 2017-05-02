@@ -1,3 +1,4 @@
 README.txt		binary
-tests/*.asc		binary
+tests/*.pub.asc		binary
+tests/*.sec.asc		binary
 tests/*.ownertrust	binary
