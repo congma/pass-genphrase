@@ -15,7 +15,7 @@ addons:
             - gnupg2
             - tree
             - xclip
-            - xz
+            - xz-utils
             - wget
 
 before_install:
