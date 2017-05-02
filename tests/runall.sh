@@ -20,10 +20,10 @@ CUL_ALL=0   # Counting all tests.
 expect_true () {
     echo "TEST: ${1}: ${2}"
     if { "${2}" ; }; then
-	printf "$TERM_PASS: ${2}\n"
+	printf '%b: %s\n' "$TERM_PASS" "$2"
 	TEST_ST=0
     else
-	printf "$TERM_FAIL: ${2}\n"
+	printf "%b: %s\n" "$TERM_FAIL" "$2"
 	TEST_ST=1
     fi
     CUL_ALL=$((CUL_ALL + 1))
@@ -34,10 +34,10 @@ expect_true () {
 expect_false () {
     echo "TEST: ${1}"
     if { "${2}" ; }; then
-	printf "$TERM_FAIL: ${2}\n"
+	printf "%b: %s\n" "$TERM_FAIL" "$2"
 	TEST_ST=1
     else
-	printf "$TERM_PASS: ${2}\n"
+	printf "%b: %s\n" "$TERM_PASS" "$2"
 	TEST_ST=0
     fi
     CUL_ALL=$((CUL_ALL + 1))
@@ -48,7 +48,7 @@ expect_false () {
 # Set up extension directory and the password store.
 PASS="$(which pass)"
 if ! [ -e "$PASS" ]; then
-    printf "$TERM_FAIL: cannot locate 'pass' command.\n"
+    printf "%b: cannot locate 'pass' command.\n" "$TERM_FAIL"
     exit 1
 fi
 export PASS
@@ -63,7 +63,7 @@ gpg2 --import < "${PASSWORD_STORE_KEY}.pub.asc"
 gpg2 --allow-secret-key-import --import < "${PASSWORD_STORE_KEY}.sec.asc"
 gpg2 --import-ownertrust < "${PASSWORD_STORE_KEY}.ownertrust"
 if ! { "$PASS" init "$PASSWORD_STORE_KEY" ; } ; then
-    printf "$TERM_FAIL: cannot initialize password storage directory.\n"
+    printf "%b: cannot initialize password storage directory.\n" "$TERM_FAIL"
     exit 1
 fi
 
