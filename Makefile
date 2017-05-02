@@ -58,11 +58,9 @@ uninstall:
 test:
 	$(MAKE) -C tests
 
-doc: README
+doc: README.txt
 
-README: pass-genphrase.1
-	echo '[![Build Status](https://travis-ci.org/congma/pass-genphrase.svg?branch=master)](https://travis-ci.org/congma/pass-genphrase)' > README
-	echo >> README
-	groff -m mandoc -T ascii pass-genphrase.1 | col -bx >> README
+README.txt: pass-genphrase.1
+	groff -m mandoc -T ascii pass-genphrase.1 | col -bx > README.txt
 
 .PHONY: install globalinstall uninstall globaluninstall test
