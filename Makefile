@@ -58,9 +58,12 @@ uninstall:
 test:
 	$(MAKE) -C tests
 
+headlesstest:
+	TEST_QR_SUPPRESS_DISPLAY=1 $(MAKE) -C tests
+
 doc: README.txt
 
 README.txt: pass-genphrase.1
 	groff -m mandoc -T ascii pass-genphrase.1 | col -bx > README.txt
 
-.PHONY: install globalinstall uninstall globaluninstall test
+.PHONY: install globalinstall uninstall globaluninstall test headlesstest
