@@ -31,4 +31,4 @@ install:
     - make install
 
 script:
-    - make test
+    - TEST_QR_SUPPRESS_DISPLAY=1 make test
