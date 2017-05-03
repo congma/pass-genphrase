@@ -15,7 +15,8 @@ TERM_PASS="${CBGreen}PASS${CReset}"
 TERM_FAIL="${CBRed}FAIL${CReset}"
 
 CUL_ST=0    # Counting failed tests.
-CUL_ALL=0   # Counting all tests.
+CUL_ALL=0   # Counting run tests.
+CUL_SKIP=0  # Skipped tests.
 # Order of arguments: description, script_name
 expect_true () {
     echo "TEST: ${1}: ${2}"
@@ -44,6 +45,32 @@ expect_false () {
     CUL_ST=$((CUL_ST + TEST_ST))
     echo --------------------
 }
+
+# args: conditional, expectation-kind, test-name, test-script
+# neutralize code execution in conditional; expect non-empty string for true,
+# and empty for false
+with_cond () {
+    if [ -n "$1" ]; then
+	shift
+	"$@"
+    else
+	CUL_SKIP=$((CUL_SKIP + 1))
+	echo "SKIP: $*"
+	echo --------------------
+    fi
+}
+
+if [ -n "$DISPLAY" ] && { which xclip > /dev/null 2>&1 ; }; then
+    CLIP_P=1
+    export PASTE_UTIL="xclip -o -selection clipboard"
+elif { which pbcopy > /dev/null 2>&1 ; }; then
+    CLIP_P=1
+    export PASTE_UTIL="pbpaste"
+fi
+
+if { which qrencode > /dev/null 2>&1 ; }; then
+    QR_P=1
+fi
 
 # Set up extension directory and the password store.
 PASS="$(which pass)"
@@ -75,11 +102,15 @@ expect_true "alt. dictionary (Diceware English)" "./test_dict_en.sh"
 expect_true "alt. dictionary (Diceware Czech)" "./test_dict_cz.sh"
 expect_true "force" "./test_force.sh"
 expect_true "inplace" "./test_inplace.sh"
+with_cond "$CLIP_P" expect_true "clipboard" "./test_clip.sh"
+with_cond "$CLIP_P" expect_true "clipboard expire" "./test_clip_wait.sh"
+with_cond "$QR_P" expect_true "QR code" "./test_qr.sh"
 expect_false "conflict options" "./test_conflict.sh"
 expect_false "bad length" "./test_bad_length.sh"
 expect_false "bad dictionary" "./test_bad_dict.sh"
 echo "Total run: $CUL_ALL"
 echo "Total failed: $CUL_ST"
+echo "Total skipped: $CUL_SKIP"
 
 # Clean up.
 rm -rf "$PASSWORD_STORE_DIR"
