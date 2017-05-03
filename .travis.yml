@@ -11,6 +11,7 @@ addons:
         packages:
             - gnupg2
             - tree
+            - qrencode
             - xvfb
             - xclip
             - xz-utils
