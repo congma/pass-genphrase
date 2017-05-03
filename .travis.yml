@@ -18,8 +18,7 @@ addons:
 before_install:
     - mkdir base
     - export PATH="$PATH:$PWD/base/bin"
-    - wget https://git.zx2c4.com/password-store/snapshot/password-store-master.tar.xz
-    - xzcat password-store-master.tar.xz | tar xf -
+    - wget https://git.zx2c4.com/password-store/snapshot/password-store-master.tar.xz -O - | xzcat | tar xf -
     - cd password-store-master && make PREFIX=../base install && cd ..
 
 install:
