@@ -69,20 +69,20 @@ with_cond () {
     fi
 }
 
-if [ -n "$DISPLAY" ] && { which xclip > /dev/null 2>&1 ; }; then
+if [ -n "$DISPLAY" ] && { type xclip > /dev/null 2>&1 ; }; then
     CLIP_P=1
     export PASTE_UTIL="xclip -o -selection clipboard"
-elif { which pbcopy > /dev/null 2>&1 ; }; then
+elif { type pbcopy > /dev/null 2>&1 ; }; then
     CLIP_P=1
     export PASTE_UTIL="pbpaste"
 fi
 
-if { which qrencode > /dev/null 2>&1 ; }; then
+if { type qrencode > /dev/null 2>&1 ; }; then
     QR_P=1
 fi
 
 # Set up extension directory and the password store.
-PASS="$(which pass)"
+PASS="$(command -v pass)"
 if ! [ -e "$PASS" ]; then
     printf "%b: cannot locate 'pass' command.\n" "$TERM_FAIL"
     exit 1
