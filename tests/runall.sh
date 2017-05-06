@@ -17,36 +17,45 @@ TERM_FAIL="${CBRed}FAIL${CReset}"
 CUL_ST=0    # Counting failed tests.
 CUL_ALL=0   # Counting run tests.
 CUL_SKIP=0  # Skipped tests.
-# Order of arguments: description, script_name
+
+hrule () {
+    echo --------------------
+}
+
+# Order of arguments: description, script_name, args
 expect_true () {
-    echo "TEST: ${1}: ${2}"
-    if { "${2}" ; }; then
-	printf '%b: %s\n' "$TERM_PASS" "$2"
+    T_NAME="$1"
+    shift
+    echo "TEST: $T_NAME: $*"
+    if { "$@" ; }; then
+	printf "%b: %s\n" "$TERM_PASS" "$*"
 	TEST_ST=0
     else
-	printf "%b: %s\n" "$TERM_FAIL" "$2"
+	printf "%b: %s\n" "$TERM_FAIL" "$*"
 	TEST_ST=1
     fi
     CUL_ALL=$((CUL_ALL + 1))
     CUL_ST=$((CUL_ST + TEST_ST))
-    echo --------------------
+    hrule
 }
 
 expect_false () {
-    echo "TEST: ${1}"
-    if { "${2}" ; }; then
-	printf "%b: %s\n" "$TERM_FAIL" "$2"
+    T_NAME="$1"
+    shift
+    echo "TEST: $T_NAME: $*"
+    if { "$@" ; }; then
+	printf "%b: %s\n" "$TERM_FAIL" "$*"
 	TEST_ST=1
     else
-	printf "%b: %s\n" "$TERM_PASS" "$2"
+	printf "%b: %s\n" "$TERM_PASS" "$*"
 	TEST_ST=0
     fi
     CUL_ALL=$((CUL_ALL + 1))
     CUL_ST=$((CUL_ST + TEST_ST))
-    echo --------------------
+    hrule
 }
 
-# args: conditional, expectation-kind, test-name, test-script
+# args: conditional, expectation-kind, test-name, test-script, more-args
 # neutralize code execution in conditional; expect non-empty string for true,
 # and empty for false
 with_cond () {
@@ -56,7 +65,7 @@ with_cond () {
     else
 	CUL_SKIP=$((CUL_SKIP + 1))
 	echo "SKIP: $*"
-	echo --------------------
+	hrule
     fi
 }
 
