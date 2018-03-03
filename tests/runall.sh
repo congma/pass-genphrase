@@ -88,6 +88,9 @@ if ! [ -e "$PASS" ]; then
     exit 1
 fi
 export PASS
+GPG="gpg"
+type gpg2 &> /dev/null && GPG="gpg2"
+export GPG
 export GNUPGHOME="./gnupg"
 export PASSWORD_STORE_DIR="./password-store"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
@@ -95,9 +98,9 @@ export PASSWORD_STORE_EXTENSIONS_DIR="../"
 export PASSWORD_STORE_KEY="F539FA5D1679367F5130C2E1F9861873C7290993"
 mkdir "$GNUPGHOME" 2> /dev/null
 chmod 700 "$GNUPGHOME"
-gpg2 --import < "${PASSWORD_STORE_KEY}.pub.asc"
-gpg2 --allow-secret-key-import --import < "${PASSWORD_STORE_KEY}.sec.asc"
-gpg2 --import-ownertrust < "${PASSWORD_STORE_KEY}.ownertrust"
+"$GPG" --import < "${PASSWORD_STORE_KEY}.pub.asc"
+"$GPG" --allow-secret-key-import --import < "${PASSWORD_STORE_KEY}.sec.asc"
+"$GPG" --import-ownertrust < "${PASSWORD_STORE_KEY}.ownertrust"
 if ! { "$PASS" init "$PASSWORD_STORE_KEY" ; } ; then
     printf "%b: cannot initialize password storage directory.\n" "$TERM_FAIL"
     exit 1
