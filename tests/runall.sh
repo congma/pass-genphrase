@@ -3,9 +3,9 @@
 
 # Color keywords if stdout is a tty.
 if [ -t 1 ]; then
-    CBRed='\e[1;31m'
-    CBGreen='\e[1;32m'
-    CReset='\e[0m'
+    CBRed='\033[1;31m'
+    CBGreen='\033[1;32m'
+    CReset='\033[0m'
 else
     CBRed=''
     CBGreen=''
