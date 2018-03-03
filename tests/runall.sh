@@ -129,6 +129,7 @@ rm -rf "$PASSWORD_STORE_DIR"
 rm -rf "$GNUPGHOME"
 # In case this file gets sourced ...
 unset PASS
+unset GPG
 unset GNUPGHOME
 unset PASSWORD_STORE_DIR
 unset PASSWORD_STORE_ENABLE_EXTENSIONS
