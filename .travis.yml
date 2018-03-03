@@ -22,7 +22,7 @@ addons:
 before_install:
     - "export DISPLAY=:99.0"
     - "sh -e /etc/init.d/xvfb start"
-    - sleep 3 # give xvfb some time to start
+    - sleep 5 # give xvfb some time to start
     - mkdir base
     - export PATH="$PATH:$PWD/base/bin"
     - wget https://git.zx2c4.com/password-store/snapshot/password-store-master.tar.xz -O - | xzcat | tar xf -
