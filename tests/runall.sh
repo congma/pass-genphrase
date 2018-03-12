@@ -28,10 +28,10 @@ expect_true () {
     shift
     echo "TEST: $T_NAME: $*"
     if { "$@" ; }; then
-	printf "%b: %s\n" "$TERM_PASS" "$*"
+	printf '%b: %s\n' "$TERM_PASS" "$*"
 	TEST_ST=0
     else
-	printf "%b: %s\n" "$TERM_FAIL" "$*"
+	printf '%b: %s\n' "$TERM_FAIL" "$*"
 	TEST_ST=1
     fi
     CUL_ALL=$((CUL_ALL + 1))
@@ -44,10 +44,10 @@ expect_false () {
     shift
     echo "TEST: $T_NAME: $*"
     if { "$@" ; }; then
-	printf "%b: %s\n" "$TERM_FAIL" "$*"
+	printf '%b: %s\n' "$TERM_FAIL" "$*"
 	TEST_ST=1
     else
-	printf "%b: %s\n" "$TERM_PASS" "$*"
+	printf '%b: %s\n' "$TERM_PASS" "$*"
 	TEST_ST=0
     fi
     CUL_ALL=$((CUL_ALL + 1))
@@ -69,27 +69,27 @@ with_cond () {
     fi
 }
 
-if [ -n "$DISPLAY" ] && { type xclip > /dev/null 2>&1 ; }; then
+if [ -n "$DISPLAY" ] && { which xclip > /dev/null 2>&1 ; }; then
     CLIP_P=1
     export PASTE_UTIL="xclip -o -selection clipboard"
-elif { type pbcopy > /dev/null 2>&1 ; }; then
+elif { which pbcopy > /dev/null 2>&1 ; }; then
     CLIP_P=1
     export PASTE_UTIL="pbpaste"
 fi
 
-if { type qrencode > /dev/null 2>&1 ; }; then
+if { which qrencode > /dev/null 2>&1 ; }; then
     QR_P=1
 fi
 
 # Set up extension directory and the password store.
 PASS="$(command -v pass)"
 if ! [ -e "$PASS" ]; then
-    printf "%b: cannot locate 'pass' command.\n" "$TERM_FAIL"
+    printf '%b: cannot locate "pass" command.\n' "$TERM_FAIL"
     exit 1
 fi
 export PASS
 GPG="gpg"
-type gpg2 &> /dev/null && GPG="gpg2"
+which gpg2 > /dev/null 2>&1 && GPG="gpg2"
 export GPG
 export GNUPGHOME="./gnupg"
 export PASSWORD_STORE_DIR="./password-store"
@@ -102,7 +102,7 @@ chmod 700 "$GNUPGHOME"
 "$GPG" --allow-secret-key-import --import < "${PASSWORD_STORE_KEY}.sec.asc"
 "$GPG" --import-ownertrust < "${PASSWORD_STORE_KEY}.ownertrust"
 if ! { "$PASS" init "$PASSWORD_STORE_KEY" ; } ; then
-    printf "%b: cannot initialize password storage directory.\n" "$TERM_FAIL"
+    printf '%b: cannot initialize password storage directory.\n' "$TERM_FAIL"
     exit 1
 fi
 

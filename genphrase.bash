@@ -151,7 +151,7 @@ cmd_genphrase_exec () {
     elif [[ $qrcode -eq 1 ]]; then
 	qrcode "$passphrase" "$path"
     else
-	printf "\e[1m\e[37mThe generated passphrase for \e[4m%s\e[24m is:\e[0m\n\e[1m\e[93m%s\e[0m\n" "$path" "$passphrase"
+	printf '\e[1m\e[37mThe generated passphrase for \e[4m%s\e[24m is:\e[0m\n\e[1m\e[93m%s\e[0m\n' "$path" "$passphrase"
     fi
 }
 
