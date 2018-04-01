@@ -27,7 +27,7 @@ expect_true () {
     T_NAME="$1"
     shift
     echo "TEST: $T_NAME: $*"
-    if { "$@" ; }; then
+    if ( "$@" ); then
 	printf '%b: %s\n' "$TERM_PASS" "$*"
 	TEST_ST=0
     else
@@ -43,7 +43,7 @@ expect_false () {
     T_NAME="$1"
     shift
     echo "TEST: $T_NAME: $*"
-    if { "$@" ; }; then
+    if ( "$@" ); then
 	printf '%b: %s\n' "$TERM_FAIL" "$*"
 	TEST_ST=1
     else
