@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 """Generate diceware-like passphrase."""
+import sys
+from math import log
 from argparse import ArgumentParser
 from random import SystemRandom
 
@@ -23,8 +25,15 @@ def main():
             sline = line.strip().split()
             if len(sline) >= 2 and sline[0][0] in NUMS:
                 words.append(sline[-1])
-    passphrase = " ".join(RNG.sample(words, ARGS_NS.count))
-    print(passphrase)   # pylint: disable=C0325
+    lexicon_size = len(words)
+    # Hard coded limit on wordlist size here!
+    if not words or log(lexicon_size, 2) * ARGS_NS.count < 64:
+        sys.stderr.write("Error: word list too short!\n")
+        sys.exit(1)
+    rand_indices = [RNG.randint(0, len(words) - 1) for _ in
+                    xrange(ARGS_NS.count)]
+    passphrase = " ".join((words[i] for i in rand_indices))
+    sys.stdout.write("%s\n" % passphrase)
 
 
 DEFAULT_LEN = 6
