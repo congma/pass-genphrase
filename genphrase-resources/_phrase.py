@@ -6,6 +6,10 @@ from argparse import ArgumentParser
 from random import SystemRandom
 
 
+if sys.version_info.major >= 3:
+    xrange = range
+
+
 def posint(thing):
     """Parse strictly positive integer."""
     res = int(thing)
