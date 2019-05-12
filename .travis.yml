@@ -6,8 +6,8 @@ python:
     - "2.7"
     - "3.6"
     - "3.7"
-    - "pypy"
-    - "pypy3"
+    - "pypy2.7"
+    - "pypy3.6"
 
 addons:
     apt:
