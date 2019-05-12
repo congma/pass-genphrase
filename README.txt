@@ -75,7 +75,7 @@ NOTES
 
        The  command  uses a helper script written in Python for securely shuf-
        fling the dictionary file.  Please make sure Python (either version 2.7
-       or 3.6) is installed.
+       or 3.6/3.7) is installed.
 
 
 BUGS
@@ -88,8 +88,8 @@ SEE ALSO
 
 
 COPYRIGHT
-       Copyright (C) 2017 Cong Ma and contributors. License  GPLv3+:  GNU  GPL
-       version 3 or later <https://gnu.org/licenses/gpl.html>
+       Copyright (C) 2017--2019 Cong Ma and contributors. License GPLv3+:  GNU
+       GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 
        This  is  free  software:  you  are free to change and redistribute it.
        There is NO WARRANTY, to the extent permitted by law.
@@ -100,4 +100,4 @@ COPYRIGHT
 
 
 
-PASS                              2017 May 1                 PASS-GENPHRASE(1)
+PASS                              2019 May 12                PASS-GENPHRASE(1)
