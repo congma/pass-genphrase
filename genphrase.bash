@@ -117,8 +117,8 @@ cmd_genphrase_exec () {
     fi
 
     # NOTE: lots of copypasta
-    mkdir -p -v "$PREFIX/$(dirname "$path")"
-    set_gpg_recipients "$(dirname "$path")"
+    mkdir -p -v "$PREFIX/$(dirname -- "$path")"
+    set_gpg_recipients "$(dirname -- "$path")"
     local passfile="$PREFIX/$path.gpg"
     set_git "$passfile"
 
@@ -131,11 +131,15 @@ cmd_genphrase_exec () {
 	die "Error: passphrase generation failed."
     fi
 
+    if ! [[ "$(echo "$passphrase" | wc -w)" -eq "$wcount" ]]; then
+	die "Error: passphrase generation failed (word count mismatch)."
+    fi
+
     if [[ $inplace -eq 0 ]]; then
-	$GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" <<<"$passphrase" || die "Password encryption aborted."
+	echo "$passphrase" | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" || die "Password encryption aborted."
     else
 	local passfile_temp="${passfile}.tmp.${RANDOM}.${RANDOM}.${RANDOM}.${RANDOM}.--"
-	if $GPG -d "${GPG_OPTS[@]}" "$passfile" | sed $'1c \\\n'"$(sed 's/[\/&]/\\&/g' <<<"$passphrase")"$'\n' | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile_temp" "${GPG_OPTS[@]}"; then
+	if { echo "$passphrase"; $GPG -d "${GPG_OPTS[@]}" "$passfile" | tail -n +2; } | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile_temp" "${GPG_OPTS[@]}"; then
 	    mv "$passfile_temp" "$passfile"
 	else
 	    rm -f "$passfile_temp"
