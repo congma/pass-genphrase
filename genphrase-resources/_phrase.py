@@ -7,7 +7,7 @@ from random import SystemRandom
 
 
 if sys.version_info.major >= 3:
-    xrange = range
+    xrange = range  # pylint: disable=C0103
 
 
 def posint(thing):
