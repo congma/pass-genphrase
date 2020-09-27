@@ -131,12 +131,8 @@ cmd_genphrase_exec () {
 	yesno "An entry already exists for $path. Overwrite it?"
     fi
 
-    exec_extra_opts=""
-    if [[ $nospaces -eq 1 ]]; then
-        exec_extra_opts="$exec_extra_opts-n"
-    fi
-
-    if ! { passphrase="$("$GENPHRASE_EXEC" "$exec_extra_opts" -d "$dict" "$wcount")" ; } ; then
+    nospaces_arg=${nospaces/0/} # substitution below would work only if the parameter is null
+    if ! { passphrase="$("$GENPHRASE_EXEC" ${nospaces_arg:+-n} -d "$dict" "$wcount")" ; } ; then
 	die "Error: passphrase generation failed."
     fi
 
