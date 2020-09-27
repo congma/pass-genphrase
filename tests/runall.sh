@@ -109,6 +109,7 @@ fi
 # Run them.
 expect_true "help" "./test_help.sh"
 expect_true "generate default" "./test_default.sh"
+expect_true "generate nospaces" "./test_nospaces.sh"
 expect_true "specify length" "./test_len.sh"
 expect_true "alt. dictionary (Diceware English)" "./test_dict_en.sh"
 expect_true "alt. dictionary (Diceware Czech)" "./test_dict_cz.sh"
