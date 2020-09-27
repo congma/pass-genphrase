@@ -61,6 +61,10 @@ OPTIONS AND ARGUMENTS
               Specify the path to a dictionary file.
 
 
+       -n, --no-spaces
+              Separate words with spaces instead of dashes.
+
+
        The default word count in the passphrase is 6.  To change this, specify
        a number as the word-count positional  argument  after  the  pass-name.
        You  can  specify  the word count as low as 1, although this is clearly
