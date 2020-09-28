@@ -25,3 +25,6 @@ With due gratitude, the following authors' contributions are acknowledged.
 * Alexandre Pujol and Contributors to "pass-update", and
 * Tad Fisher and Contributors to "pass-otp"
  - Their work on pass extensions has been studied while writing this program.
+
+* Vanya Klimenko
+ - Contributor of the "--no-spaces" option.
