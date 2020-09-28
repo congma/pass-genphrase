@@ -92,8 +92,8 @@ SEE ALSO
 
 
 COPYRIGHT
-       Copyright (C) 2017--2019 Cong Ma and contributors. License GPLv3+:  GNU
-       GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+       Copyright (C) 2017-- Cong Ma and Contributors. License GPLv3+: GNU  GPL
+       version 3 or later <https://gnu.org/licenses/gpl.html>
 
        This  is  free  software:  you  are free to change and redistribute it.
        There is NO WARRANTY, to the extent permitted by law.

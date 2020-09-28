@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # pass genphrase - Password Store Extension (https://www.passwordstore.org/)
 # Generate passphrase from dictionary file; similar to Diceware.
-# Copyright (C) 2017 Cong Ma
+# Copyright (C) 2017-- Cong Ma and Contributors
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
