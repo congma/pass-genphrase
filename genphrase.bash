@@ -49,7 +49,7 @@ GENPHRASE_RESOURCES="$EXTENSIONS/genphrase-resources"
 GENPHRASE_DEFAULT_DICT="$GENPHRASE_RESOURCES/eff_large_wordlist.txt"
 GENPHRASE_EXEC="$GENPHRASE_RESOURCES/_phrase.py"
 GENPHRASE_DEFAULT_WORDCOUNT=6
-CMD_GENPHRASE_USAGE="Usage: $PROGRAM $COMMAND [-h,--help] [-c,--clip] [-f,--force] [-i,--in-place] [-q,--qrcode] [-d <PATH>,--dict=<PATH>] pass-name [word-count]"
+CMD_GENPHRASE_USAGE="Usage: $PROGRAM $COMMAND [-h,--help] [-c,--clip] [-f,--force] [-i,--in-place] [-q,--qrcode] [-n, --no-spaces] [-d <PATH>,--dict=<PATH>] pass-name [word-count]"
 
 
 cmd_genphrase_help () {
@@ -62,7 +62,8 @@ Similar to "$PROGRAM generate", but generate a passphrase of given word count
 
 Options:
     The options follow the interface of "$PROGRAM generate", except that the
-    "-n / --no-symbols" option is not necessary.
+    "-n / --no-symbols" option is replaced with "--no-spaces" option (see
+    below).
 
     -h, --help		Show this help and exit.
     -c, --clip		Write generated passphrase to clipboard, to be erased
@@ -78,13 +79,16 @@ Options:
 
     -d <PATH>, --dict=<PATH>
      			Specify path to dictionary file.
+
+    -n, --no-spaces
+                Separate words with spaces instead of dashes.
 __genphrase_usage_097612_EOF
 }
 
 
 cmd_genphrase_exec () {
-    local opts wanthelp=0 qrcode=0 clip=0 force=0 inplace=0 dict="$GENPHRASE_DEFAULT_DICT" passphrase
-    opts="$($GETOPT -o "hcfiqd:" -l "help,clip,force,in-place,qrcode,dict:" -n "$PROGRAM $COMMAND" -- "$@")"
+    local opts wanthelp=0 qrcode=0 clip=0 force=0 inplace=0 nospaces=0 dict="$GENPHRASE_DEFAULT_DICT" passphrase
+    opts="$($GETOPT -o "hcfiqnd:" -l "help,clip,force,in-place,qrcode,nospaces,dict:" -n "$PROGRAM $COMMAND" -- "$@")"
     local err=$?
     eval set -- "$opts"
     while true; do
@@ -94,6 +98,7 @@ cmd_genphrase_exec () {
 	    -f|--force) force=1; shift ;;
 	    -i|--in-place) inplace=1; shift ;;
 	    -q|--qrcode) qrcode=1; shift ;;
+        -n|--no-spaces) nospaces=1; shift ;;
 	    -d|--dict) dict="$2"; shift 2 ;;
 	    --) shift; break ;;
 	esac
@@ -126,12 +131,19 @@ cmd_genphrase_exec () {
 	yesno "An entry already exists for $path. Overwrite it?"
     fi
 
-    
-    if ! { passphrase="$("$GENPHRASE_EXEC" -d "$dict" "$wcount")" ; } ; then
+    nospaces_arg=${nospaces/0/} # substitution below would work only if the parameter is null
+    if ! { passphrase="$("$GENPHRASE_EXEC" ${nospaces_arg:+-n} -d "$dict" "$wcount")" ; } ; then
 	die "Error: passphrase generation failed."
     fi
 
-    if ! [[ "$(echo "$passphrase" | wc -w)" -eq "$wcount" ]]; then
+    # if nospaces is set, translate dashes back to spaces so wc would understand us
+    if [[ $nospaces -eq 0 ]]; then
+        result_wcount="$(echo "$passphrase" | wc -w)";
+    else
+        result_wcount="$(echo "$passphrase" | tr '-' ' ' | wc -w)";
+    fi
+
+    if ! [[ "$result_wcount" -eq "$wcount" ]]; then
 	die "Error: passphrase generation failed (word count mismatch)."
     fi
 

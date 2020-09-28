@@ -21,6 +21,7 @@ def posint(thing):
 def main():
     """Entry point."""
     words = []
+    separator = "-" if ARGS_NS.no_spaces else " "
     with open(ARGS_NS.dict, "r") as dfile:
         # Diceware dictionary may not have a fixed format spec, but a) line
         # begins with numeral 1-6, b) there should be seperator(s) between
@@ -36,7 +37,7 @@ def main():
         sys.exit(1)
     rand_indices = [RNG.randint(0, len(words) - 1) for _ in
                     xrange(ARGS_NS.count)]
-    passphrase = " ".join((words[i] for i in rand_indices))
+    passphrase = separator.join((words[i] for i in rand_indices))
     sys.stdout.write("%s\n" % passphrase)
 
 
@@ -45,6 +46,8 @@ NUMS = frozenset("123456")
 OPT_PARSER = ArgumentParser(description="Generate diceware-like passphrase.")
 OPT_PARSER.add_argument("-d", "--dict", metavar="FILE", required=True,
                         help="path to diceware-like dictionary")
+OPT_PARSER.add_argument("-n", "--no-spaces", action="store_true", dest="no_spaces",
+                        help="separate words with spaces instead of dashes")
 OPT_PARSER.add_argument("count", metavar="N", default=DEFAULT_LEN, type=posint,
                         nargs="?",
                         help="word count (default: %d)" % DEFAULT_LEN)
