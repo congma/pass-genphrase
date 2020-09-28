@@ -67,21 +67,21 @@ Options:
 
     -h, --help		Show this help and exit.
     -c, --clip		Write generated passphrase to clipboard, to be erased
-    			$CLIP_TIME seconds later, without echoing to terminal.
+			$CLIP_TIME second(s) later, without echoing to terminal.
     -f, --force		Replace existing password without prompt.
     -i, --in-place	Generate non-interactively; only replace the first
 			line of the password file with the newly generated
-    			passphrase.
+			passphrase.
     -q, --qrcode	Encode generated passphrase using qrencode, without
-    			echoing the text to terminal.
+			echoing the text to terminal.
 
     In addition, the following option is specific to $COMMAND command:
 
     -d <PATH>, --dict=<PATH>
-     			Specify path to dictionary file.
+			Specify path to dictionary file.
 
     -n, --no-spaces
-                Separate words with spaces instead of dashes.
+			Separate words with spaces instead of dashes.
 __genphrase_usage_097612_EOF
 }
 

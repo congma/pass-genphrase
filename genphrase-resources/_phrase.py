@@ -46,8 +46,9 @@ NUMS = frozenset("123456")
 OPT_PARSER = ArgumentParser(description="Generate diceware-like passphrase.")
 OPT_PARSER.add_argument("-d", "--dict", metavar="FILE", required=True,
                         help="path to diceware-like dictionary")
-OPT_PARSER.add_argument("-n", "--no-spaces", action="store_true", dest="no_spaces",
-                        help="separate words with spaces instead of dashes")
+OPT_PARSER.add_argument("-n", "--no-spaces", action="store_true",
+                        dest="no_spaces",
+                        help="separate words with dashes instead of spaces")
 OPT_PARSER.add_argument("count", metavar="N", default=DEFAULT_LEN, type=posint,
                         nargs="?",
                         help="word count (default: %d)" % DEFAULT_LEN)

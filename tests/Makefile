@@ -1,4 +1,7 @@
 all:
 	./runall.sh
 
-.PHONY: all
+clean:
+	rm -rf gnupg password-store
+
+.PHONY: all clean

@@ -62,7 +62,7 @@ OPTIONS AND ARGUMENTS
 
 
        -n, --no-spaces
-              Separate words with spaces instead of dashes.
+              Separate words with dashes instead of spaces.
 
 
        The default word count in the passphrase is 6.  To change this, specify
