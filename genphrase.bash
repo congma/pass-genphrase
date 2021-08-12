@@ -81,7 +81,7 @@ Options:
 			Specify path to dictionary file.
 
     -n, --no-spaces
-			Separate words with spaces instead of dashes.
+			Separate words with dashes instead of spaces.
 __genphrase_usage_097612_EOF
 }
 
